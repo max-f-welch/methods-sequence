@@ -155,6 +155,7 @@ Panel data is data where each row represents a unit-time observation, essentiall
 #### d. Categories of data
 
 We typically think of data as being stored in three forms
+
 * Categorical
   * Refers to anything with very clear discrete categories that cannot be ranked or ordered
   * Common examples - gender, race, country of origin

@@ -2,10 +2,11 @@
 title: "Political Science Methods Sequence"
 author: "Max Welch"
 date: "UC Davis"
-output:
-  html_document:
-    theme: paper
-    highlight: default
+format:
+  html:
+    theme: materia
+    css: styles.css
+    embed-resources: true
 ---
 
 Discussion section materials for the graduate methods sequence.

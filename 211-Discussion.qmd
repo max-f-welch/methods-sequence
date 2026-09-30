@@ -2,19 +2,20 @@
 title: "POL 211 Discussion"
 author: "Max Welch"
 date: "Fall 2026"
-output:
-  html_document:
-    theme: paper
-    highlight: default
+format:
+  html:
+    theme: materia
+    css: styles.css
+    embed-resources: true
+    code-copy: true
+execute:
+  message: false
+  warning: false
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-```
 
 [← All courses](index.html)
 
-# {.tabset .tabset-fade .tabset-fill}
+::: {.panel-tabset}
 
 ## Discussion I
 
@@ -37,7 +38,8 @@ library(tidyverse)
 
 For today, we are using `example.csv`. You can download it [here](data/example.csv).
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 df <- read_csv("data/example.csv")
 ```
 
@@ -48,3 +50,5 @@ For today's discussion, we'll ...
 ### 1. Topic
 
 Text here.
+
+:::

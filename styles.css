@@ -1,0 +1,8 @@
+/* Full-width tabs, like R Markdown's .tabset-fill */
+.panel-tabset > .nav-tabs {
+  display: flex;
+}
+.panel-tabset > .nav-tabs > .nav-item {
+  flex: 1 1 0;
+  text-align: center;
+}

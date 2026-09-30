@@ -15,40 +15,163 @@ execute:
 
 [← All courses](index.html)
 
+This material borrows heavily from earlier work down by Yu-Shiuan (Lily) Huang, now assistant professor at National Chengchi University.
+
 ::: {.panel-tabset}
 
 ## Discussion I
 
-For today's discussion, we'll ...
+For today's discussion, we'll go over writing and rendering .qmd files, go over some basics of writing a good markdown file code, and review some basic code related to material in the problem set.
 
-### 1. First topic
+### 1. Quarto Markdown files
 
-Text here.
+Markdown files are useful not only for presentation or homework submissions, but also in my experience are a helpful way to structure and organize your code into discrete blocks and allow you to add comments. Markdown files are divided into two sections: text and code. Unlike with an R script, text only becomes code when in the sections between the three backticks ```  follow by {r}. A chunk of code is then close by another three backticks, at which point it becomes text again. Below is what a chunk looks like:
 
-### 2. Second topic
+```{r }
+library(tidyverse)
+library(juanr)
+library(here)
+
+print("Hello World")
+```
+
+With homework assignments, it is typically helpful to have one text section and one chunk per question. When writing code for your own projects, I would suggest trying to use chunks for discrete tasks that you're trying to accomplish (for instance, one chunk that cleans a dataset to be like you want). For instance:
+
+```{r }
+wars_1990 <- fearon %>% 
+  filter(year == 1990)
+
+wars_1990 <- wars_1990 %>% 
+  mutate(log_gdp_cap = log(gdp_cap),
+         log_pop = log(pop),
+         polity2_sq = polity2*polity2)
+
+wars_1990
+```
+This chunk above subsets and then adds new columns. Now that we have the data in the form we want, we can do whatever it is we'd like with it.
+
+```{r }
+ggplot(wars_1990, aes(x = log_pop, y = log_gdp_cap)) +
+  geom_point() +
+  labs(x = "ln(Population)", y = "ln(GDP/capita", title = "Development Levels by Population Size") +
+  geom_smooth() +
+  theme_bw()
+```
+
+By separating the outputs like this, it's easier to comment on what's happening as well as mentally break up what each stage is doing. This isn't strictly necessary, but I find it helps clear up the work.
+
+#### Rendering
+
+For the class assignments, you will need to submit both the .qmd file as well as the rendered html output. To create a new Quarto file, go to create a new file in RStudio and select "Quarto Document". *Make sure* that you have "Use visual markdown editor" unchecked before creating the file.
+
+Rendering will create an html file in the same folder as the .qmd file with the same name (except .html instead of .qmd). This is (one) reason why having good file organization is important. It can often be helpful early on to keep rendering the file as you go to see if any bugs emerge, rather than waiting right up until you need to submit.
+
+
+### 2. Good Organizational Practices
+
+#### Folders/Directories
+
+I strongly recommend being proactive about organizing your work into clear folders which are not stored in Downloads or your Desktop. It's very easy at the start to think that it isn't a big deal, but when you begin to work on more complex projects, this will increasingly make your life harder. Having a folder for each class and a subfolder for each homework assignment will help immensely and create good habits when you begin your own research.
+
+#### File paths
+
+To make reading in outside files easier, there are a couple of options that can allow for easily portable file paths.
+
+One option, which we have covered in class, is to use the function *here()* to generate file paths. For example:
+
+```{r }
+here()
+here("data", "voters.csv")
+```
+See how running here() prints out the location of the Rproject and including "data" and "voters.csv" appends them to create a full file path? We can then include that in a function like *read.csv()*.
+
+Another option that doesn't require creating an Rproject is to use the function *getwd()*
+
+```{r }
+getwd()
+```
+
+If you are working in an RMarkdown or Quarto file (like this one!) it will automatically return the directory the file is located in. If you are working with an R script, you need to first run *setwd()* at the front of the script. For example, you would want:
+
+setwd("C:/Users/maxfw/Dropbox/methods-sequences")
+
+To get this to print out a nice full file path like here() does, we can use the function *paste()*, which takes two or more strings and puts them into one string.
+
+```{r }
+paste(getwd(), "/data/voters.csv")
+```
+This won't work because paste() automatically adds a space between the strings. We have two options to fix this problem: we can either change the seperator to be a blank space, or we can use *paste0()* instead.
+
+```{r }
+paste0(getwd(), "/data/voters.csv")
+paste(getwd(), "/data/voters.csv", sep = "")
+
+```
+
+Notice that this can work with any string, not just directories.
+
+```{r }
+paste("America", "England", sep = "-")
+```
+
+### 3. Packages in R
 
 #### a. Load R packages
 
-```{r}
-# install.packages("tidyverse")
-library(tidyverse)
-```
 
-#### b. Import data
+R has a large number of freely available packages available to install and include in your code. These include code or data that allow you to use material created by others rather than needing to develop it by scratch. If you need to install a package, you can use the function 'install.packages' and inside include (as a string, meaning with the quotation marks) the name of the package. For example, in the homework assignment, we will need to use the library 'wakefield', so let's install it now if we haven't yet:
 
-For today, we are using `example.csv`. You can download it [here](data/example.csv).
 
 ```{r}
-#| eval: false
-df <- read_csv("data/example.csv")
+#install.packages("wakefield")
 ```
+
+When including a package in a script or qmd file, you use the function 'library'. If the package is installed, you do not need to include the quotation marks for this. Including a library looks like the following:
+
+```{r }
+library(wakefield)
+```
+
+There are many, many useful packages out there. Some of them include:
+
+* tidyverse - this is an umbrella library that includes ggplot and dplyr, which we used extensively in Quant Camp
+* haven - this library provides functions to read in data meant for other tools (Stata, SPSS, and SAS)
+* stringr - provides a cohesive set of functions designed to make working with strings as easy as possible
+
+### 4. Understanding data structures
+
+#### a. Cross-sectional data
+
+Cross-sectional data is the most conventional data format you will work with in my experience. In cross-sectional data, each row represents a unique unit of analysis at the same point in time. For example, a survey has one row per survey respondent, with each column representing that respondent's answers to the same survey fielded at (roughly) the same time. Any comparisons being made are between individuals at the same point in time.
+
+#### b. Time series data
+
+Time series is data where each row represents the same unit, but at a different point in time. For example, it might track conventional macroeconomic indicators for America from 1945-2025, where each  column would represent a macroeconomic indicator in that row's year, but the data would always be about America.
+
+#### c. Panel data
+
+Panel data is data where each row represents a unit-time observation, essentially a stacked series of cross-sections where each unit appears in multiple rows to represent different time periods. The ANES panel survey, for example, covers 2016-2024 and so had 3 rows per respondent, so each row represents an individual *i* in election year *j*, so there is one row for respondent *i* in 2016, one row in 2020, and one row in 2024.
+
+#### d. Categories of data
+
+We typically think of data as being stored in three forms
+* Categorical
+  * Refers to anything with very clear discrete categories that cannot be ranked or ordered
+  * Common examples - gender, race, country of origin
+* Ordinal
+  * These are discrete categories (so the cutoffs are clear) but they can be meaningfully ranked and comparisons can be made, but no arithmetic can be done with them
+  * Common example - highest educational degree earned - high school, bachelor's, master's, PhD
+  * We can say that a bachelor's degree is 'more' education than a high school degree, but we can't say how 'much' more it is.
+* Nominal
+  * There are non-discrete variables which can be broken down into decimal positions and can be used with arithmetic
+  * Common example - income can range from 0 to theoretically infinity and there are infinite amounts between each dollar
+  * Not only can we say that 1000 is greater than 900, we can say by how mucch
+
 
 ## Discussion II
 
-For today's discussion, we'll ...
+For today's discussion, we'll TBD
 
-### 1. Topic
-
-Text here.
+### 1.
 
 :::

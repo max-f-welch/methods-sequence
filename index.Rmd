@@ -1,0 +1,15 @@
+---
+title: "Political Science Methods Sequence"
+author: "Max Welch"
+date: "UC Davis"
+output:
+  html_document:
+    theme: paper
+    highlight: default
+---
+
+Discussion section materials for the graduate methods sequence.
+
+- [POL 211 Discussion](211-Discussion.html)
+- [POL 212 Discussion](212-Discussion.html)
+- [POL 213 Discussion](213-Discussion.html)

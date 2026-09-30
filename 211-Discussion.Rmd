@@ -1,0 +1,50 @@
+---
+title: "POL 211 Discussion"
+author: "Max Welch"
+date: "Fall 2026"
+output:
+  html_document:
+    theme: paper
+    highlight: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+[← All courses](index.html)
+
+# {.tabset .tabset-fade .tabset-fill}
+
+## Discussion I
+
+For today's discussion, we'll ...
+
+### 1. First topic
+
+Text here.
+
+### 2. Second topic
+
+#### a. Load R packages
+
+```{r}
+# install.packages("tidyverse")
+library(tidyverse)
+```
+
+#### b. Import data
+
+For today, we are using `example.csv`. You can download it [here](data/example.csv).
+
+```{r, eval=FALSE}
+df <- read_csv("data/example.csv")
+```
+
+## Discussion II
+
+For today's discussion, we'll ...
+
+### 1. Topic
+
+Text here.

@@ -2248,7 +2248,7 @@ text-align: center;
 
 
 <p><a href="index.html">← All courses</a></p>
-<p>This material borrows heavily from earlier work down by Yu-Shiuan (Lily) Huang, now assistant professor at National Chengchi University.</p>
+<p>This material borrows heavily from an earlier version by Yu-Shiuan (Lily) Huang, assistant professor at National Chengchi University.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href>Discussion I</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href>Discussion II</a></li></ul>
 <div class="tab-content">
@@ -2318,118 +2318,23 @@ text-align: center;
 <p>Rendering will create an html file in the same folder as the .qmd file with the same name (except .html instead of .qmd). This is (one) reason why having good file organization is important. It can often be helpful early on to keep rendering the file as you go to see if any bugs emerge, rather than waiting right up until you need to submit.</p>
 </section>
 </section>
-<section id="good-organizational-practices" class="level3">
-<h3 class="anchored" data-anchor-id="good-organizational-practices">2. Good Organizational Practices</h3>
-<section id="foldersdirectories" class="level4">
-<h4 class="anchored" data-anchor-id="foldersdirectories">Folders/Directories</h4>
-<p>I strongly recommend being proactive about organizing your work into clear folders which are not stored in Downloads or your Desktop. It’s very easy at the start to think that it isn’t a big deal, but when you begin to work on more complex projects, this will increasingly make your life harder. Having a folder for each class and a subfolder for each homework assignment will help immensely and create good habits when you begin your own research.</p>
-</section>
-<section id="file-paths" class="level4">
-<h4 class="anchored" data-anchor-id="file-paths">File paths</h4>
-<p>To make reading in outside files easier, there are a couple of options that can allow for easily portable file paths.</p>
-<p>One option, which we have covered in class, is to use the function <em>here()</em> to generate file paths. For example:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;C:/Users/maxfw/Dropbox/methods-sequence&quot;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;voters.csv&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;C:/Users/maxfw/Dropbox/methods-sequence/data/voters.csv&quot;</code></pre>
-</div>
-</div>
-<p>See how running here() prints out the location of the Rproject and including “data” and “voters.csv” appends them to create a full file path? We can then include that in a function like <em>read.csv()</em>.</p>
-<p>Another option that doesn’t require creating an Rproject is to use the function <em>getwd()</em></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;C:/Users/maxfw/Dropbox/methods-sequence&quot;</code></pre>
-</div>
-</div>
-<p>If you are working in an RMarkdown or Quarto file (like this one!) it will automatically return the directory the file is located in. If you are working with an R script, you need to first run <em>setwd()</em> at the front of the script. For example, you would want:</p>
-<p>setwd(“C:/Users/maxfw/Dropbox/methods-sequences”)</p>
-<p>To get this to print out a nice full file path like here() does, we can use the function <em>paste()</em>, which takes two or more strings and puts them into one string.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/data/voters.csv&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;C:/Users/maxfw/Dropbox/methods-sequence /data/voters.csv&quot;</code></pre>
-</div>
-</div>
-<p>This won’t work because paste() automatically adds a space between the strings. We have two options to fix this problem: we can either change the seperator to be a blank space, or we can use <em>paste0()</em> instead.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/data/voters.csv&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;C:/Users/maxfw/Dropbox/methods-sequence/data/voters.csv&quot;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/data/voters.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;C:/Users/maxfw/Dropbox/methods-sequence/data/voters.csv&quot;</code></pre>
-</div>
-</div>
-<p>Notice that this can work with any string, not just directories.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&quot;America&quot;</span>, <span class="st">&quot;England&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;America-England&quot;</code></pre>
-</div>
-</div>
-</section>
-</section>
 <section id="packages-in-r" class="level3">
-<h3 class="anchored" data-anchor-id="packages-in-r">3. Packages in R</h3>
+<h3 class="anchored" data-anchor-id="packages-in-r">2. Packages in R</h3>
 <section id="a.-load-r-packages" class="level4">
 <h4 class="anchored" data-anchor-id="a.-load-r-packages">a. Load R packages</h4>
 <p>R has a large number of freely available packages available to install and include in your code. These include code or data that allow you to use material created by others rather than needing to develop it by scratch. If you need to install a package, you can use the function ‘install.packages’ and inside include (as a string, meaning with the quotation marks) the name of the package. For example, in the homework assignment, we will need to use the library ‘wakefield’, so let’s install it now if we haven’t yet:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;wakefield&quot;)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;wakefield&quot;)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>When including a package in a script or qmd file, you use the function ‘library’. If the package is installed, you do not need to include the quotation marks for this. Including a library looks like the following:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wakefield)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wakefield)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>There are many, many useful packages out there. Some of them include:</p>
 <ul>
 <li>tidyverse - this is an umbrella library that includes ggplot and dplyr, which we used extensively in Quant Camp</li>
 <li>haven - this library provides functions to read in data meant for other tools (Stata, SPSS, and SAS)</li>
 <li>stringr - provides a cohesive set of functions designed to make working with strings as easy as possible</li>
-</ul>
-</section>
-</section>
-<section id="understanding-data-structures" class="level3">
-<h3 class="anchored" data-anchor-id="understanding-data-structures">4. Understanding data structures</h3>
-<section id="a.-cross-sectional-data" class="level4">
-<h4 class="anchored" data-anchor-id="a.-cross-sectional-data">a. Cross-sectional data</h4>
-<p>Cross-sectional data is the most conventional data format you will work with in my experience. In cross-sectional data, each row represents a unique unit of analysis at the same point in time. For example, a survey has one row per survey respondent, with each column representing that respondent’s answers to the same survey fielded at (roughly) the same time. Any comparisons being made are between individuals at the same point in time.</p>
-</section>
-<section id="b.-time-series-data" class="level4">
-<h4 class="anchored" data-anchor-id="b.-time-series-data">b. Time series data</h4>
-<p>Time series is data where each row represents the same unit, but at a different point in time. For example, it might track conventional macroeconomic indicators for America from 1945-2025, where each column would represent a macroeconomic indicator in that row’s year, but the data would always be about America.</p>
-</section>
-<section id="c.-panel-data" class="level4">
-<h4 class="anchored" data-anchor-id="c.-panel-data">c. Panel data</h4>
-<p>Panel data is data where each row represents a unit-time observation, essentially a stacked series of cross-sections where each unit appears in multiple rows to represent different time periods. The ANES panel survey, for example, covers 2016-2024 and so had 3 rows per respondent, so each row represents an individual <em>i</em> in election year <em>j</em>, so there is one row for respondent <em>i</em> in 2016, one row in 2020, and one row in 2024.</p>
-</section>
-<section id="d.-categories-of-data" class="level4">
-<h4 class="anchored" data-anchor-id="d.-categories-of-data">d. Categories of data</h4>
-<p>We typically think of data as being stored in three forms</p>
-<ul>
-<li>Categorical
-<ul>
-<li>Refers to anything with very clear discrete categories that cannot be ranked or ordered</li>
-<li>Common examples - gender, race, country of origin</li>
-</ul></li>
-<li>Ordinal
-<ul>
-<li>These are discrete categories (so the cutoffs are clear) but they can be meaningfully ranked and comparisons can be made, but no arithmetic can be done with them</li>
-<li>Common example - highest educational degree earned - high school, bachelor’s, master’s, PhD</li>
-<li>We can say that a bachelor’s degree is ‘more’ education than a high school degree, but we can’t say how ‘much’ more it is.</li>
-</ul></li>
-<li>Nominal
-<ul>
-<li>There are non-discrete variables which can be broken down into decimal positions and can be used with arithmetic</li>
-<li>Common example - income can range from 0 to theoretically infinity and there are infinite amounts between each dollar</li>
-<li>Not only can we say that 1000 is greater than 900, we can say by how mucch</li>
-</ul></li>
 </ul>
 </section>
 </section>

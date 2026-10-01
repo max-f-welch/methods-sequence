@@ -15,7 +15,7 @@ execute:
 
 [← All courses](index.html)
 
-This material borrows heavily from earlier work down by Yu-Shiuan (Lily) Huang, now assistant professor at National Chengchi University.
+This material borrows heavily from an earlier version by Yu-Shiuan (Lily) Huang, assistant professor at National Chengchi University.
 
 ::: {.panel-tabset}
 
@@ -67,54 +67,8 @@ For the class assignments, you will need to submit both the .qmd file as well as
 Rendering will create an html file in the same folder as the .qmd file with the same name (except .html instead of .qmd). This is (one) reason why having good file organization is important. It can often be helpful early on to keep rendering the file as you go to see if any bugs emerge, rather than waiting right up until you need to submit.
 
 
-### 2. Good Organizational Practices
 
-#### Folders/Directories
-
-I strongly recommend being proactive about organizing your work into clear folders which are not stored in Downloads or your Desktop. It's very easy at the start to think that it isn't a big deal, but when you begin to work on more complex projects, this will increasingly make your life harder. Having a folder for each class and a subfolder for each homework assignment will help immensely and create good habits when you begin your own research.
-
-#### File paths
-
-To make reading in outside files easier, there are a couple of options that can allow for easily portable file paths.
-
-One option, which we have covered in class, is to use the function *here()* to generate file paths. For example:
-
-```{r }
-here()
-here("data", "voters.csv")
-```
-See how running here() prints out the location of the Rproject and including "data" and "voters.csv" appends them to create a full file path? We can then include that in a function like *read.csv()*.
-
-Another option that doesn't require creating an Rproject is to use the function *getwd()*
-
-```{r }
-getwd()
-```
-
-If you are working in an RMarkdown or Quarto file (like this one!) it will automatically return the directory the file is located in. If you are working with an R script, you need to first run *setwd()* at the front of the script. For example, you would want:
-
-setwd("C:/Users/maxfw/Dropbox/methods-sequences")
-
-To get this to print out a nice full file path like here() does, we can use the function *paste()*, which takes two or more strings and puts them into one string.
-
-```{r }
-paste(getwd(), "/data/voters.csv")
-```
-This won't work because paste() automatically adds a space between the strings. We have two options to fix this problem: we can either change the seperator to be a blank space, or we can use *paste0()* instead.
-
-```{r }
-paste0(getwd(), "/data/voters.csv")
-paste(getwd(), "/data/voters.csv", sep = "")
-
-```
-
-Notice that this can work with any string, not just directories.
-
-```{r }
-paste("America", "England", sep = "-")
-```
-
-### 3. Packages in R
+### 2. Packages in R
 
 #### a. Load R packages
 
@@ -138,35 +92,7 @@ There are many, many useful packages out there. Some of them include:
 * haven - this library provides functions to read in data meant for other tools (Stata, SPSS, and SAS)
 * stringr - provides a cohesive set of functions designed to make working with strings as easy as possible
 
-### 4. Understanding data structures
 
-#### a. Cross-sectional data
-
-Cross-sectional data is the most conventional data format you will work with in my experience. In cross-sectional data, each row represents a unique unit of analysis at the same point in time. For example, a survey has one row per survey respondent, with each column representing that respondent's answers to the same survey fielded at (roughly) the same time. Any comparisons being made are between individuals at the same point in time.
-
-#### b. Time series data
-
-Time series is data where each row represents the same unit, but at a different point in time. For example, it might track conventional macroeconomic indicators for America from 1945-2025, where each  column would represent a macroeconomic indicator in that row's year, but the data would always be about America.
-
-#### c. Panel data
-
-Panel data is data where each row represents a unit-time observation, essentially a stacked series of cross-sections where each unit appears in multiple rows to represent different time periods. The ANES panel survey, for example, covers 2016-2024 and so had 3 rows per respondent, so each row represents an individual *i* in election year *j*, so there is one row for respondent *i* in 2016, one row in 2020, and one row in 2024.
-
-#### d. Categories of data
-
-We typically think of data as being stored in three forms
-
-* Categorical
-  * Refers to anything with very clear discrete categories that cannot be ranked or ordered
-  * Common examples - gender, race, country of origin
-* Ordinal
-  * These are discrete categories (so the cutoffs are clear) but they can be meaningfully ranked and comparisons can be made, but no arithmetic can be done with them
-  * Common example - highest educational degree earned - high school, bachelor's, master's, PhD
-  * We can say that a bachelor's degree is 'more' education than a high school degree, but we can't say how 'much' more it is.
-* Nominal
-  * There are non-discrete variables which can be broken down into decimal positions and can be used with arithmetic
-  * Common example - income can range from 0 to theoretically infinity and there are infinite amounts between each dollar
-  * Not only can we say that 1000 is greater than 900, we can say by how mucch
 
 
 ## Discussion II
